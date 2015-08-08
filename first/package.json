@@ -1,0 +1,14 @@
+{
+  "name": "first",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "nobkz",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp-purescript": "^0.6.0"
+  }
+}
