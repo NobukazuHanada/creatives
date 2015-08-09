@@ -39,7 +39,7 @@ main = do
        clearRect context {x:0.0,y:0.0,w:width,h:height}
        init <- toAssocArray initRef
        foreachE init (\{index:_, value:{x:x,y:y,r:r,c:c}} -> do
-                             draw context x y r (angle * (r/100.0)) c
+                             draw context x y r (angle * (50.0/r)) c
                              return unit))
 
 loop = foldp (\a b -> b + 0.2) 0.0 (every $ 50.0 * millisecond)
