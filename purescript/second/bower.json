@@ -1,6 +1,7 @@
 {
-  "name": "first",
+  "name": "second",
   "version": "0.0.0",
+  "homepage": "https://github.com/NobukazuHanada/creatives",
   "authors": [
     "NobukazuHanada <tone.nobukazu@gmail.com>"
   ],
@@ -13,8 +14,13 @@
     "tests"
   ],
   "dependencies": {
+    "purescript-canvas": "~0.3.0",
     "purescript-console": "~0.1.0",
+    "purescript-dom": "~0.1.3",
     "purescript-functions": "~0.1.0",
-    "purescript-st": "~0.1.0"
+    "purescript-signal": "~4.1.0",
+    "purescript-random": "~0.2.2",
+    "purescript-st": "~0.1.0",
+    "purescript-vector": "~0.2.0"
   }
 }
