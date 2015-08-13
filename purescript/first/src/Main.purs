@@ -7,6 +7,7 @@ import Control.Monad.ST
 import Control.Monad.Eff.Random
 import Graphics.Canvas
 import Data.Maybe
+import qualified Math as M
 
 main = do
   Just element <- getCanvasElementById "canvas"
@@ -19,30 +20,34 @@ main = do
   forE 1.0 20.0 (\i -> do
        x <- map (\x -> x * 500.0 + 50.0) random
        y <- map (\x -> x * 500.0 + 50.0) random
-       foreachE (myRect x y) (line context)
+       size <- map (* 60.0) random
+       foreachE (myRect x y size) (line context)
        stroke context
        return unit
   )
   closePath context
   return unit
 
+type Pos = {x::Number, y::Number}
 
-myRect x y = 
+myRect :: Number -> Number -> Number -> Array Pos
+myRect x y size = 
   let
     -- A
-    a = { x : (x - 50.0),
-          y : (y - 50.0)}
+    a = { x : (x - size),
+          y : (y - size)}
     -- B
-    b = { x : (x - 50.0),
-          y : (y + 50.0)}
+    b = { x : (x - size),
+          y : (y + size)}
     -- C
-    c = { x : (x + 50.0),
-          y : (y + 50.0)}
+    c = { x : (x + size),
+          y : (y + size)}
     -- D
-    d = { x : (x + 50.0),
-          y : (y - 50.0)}
+    d = { x : (x + size),
+          y : (y - size)}
   in
     [a,b,c,d]
+    
 
 
 line context pos = do
