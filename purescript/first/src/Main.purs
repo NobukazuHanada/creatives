@@ -13,11 +13,39 @@ main = do
   setCanvasWidth 600.0 element
   setCanvasHeight 600.0 element
   context <- getContext2D element
+  beginPath context
+  setLineWidth 1.5 context
+  translate { translateX : 0.0, translateY : 0.0 } context
   forE 1.0 20.0 (\i -> do
-       value1 <- random
-       value2 <- random
-       rect context { x: value1 * 500.0, y:value2 * 500.0, w:100.0, h: 100.0 }
+       x <- map (\x -> x * 500.0 + 50.0) random
+       y <- map (\x -> x * 500.0 + 50.0) random
+       foreachE (myRect x y) (line context)
        stroke context
        return unit
   )
+  closePath context
+  return unit
+
+
+myRect x y = 
+  let
+    -- A
+    a = { x : (x - 50.0),
+          y : (y - 50.0)}
+    -- B
+    b = { x : (x - 50.0),
+          y : (y + 50.0)}
+    -- C
+    c = { x : (x + 50.0),
+          y : (y + 50.0)}
+    -- D
+    d = { x : (x + 50.0),
+          y : (y - 50.0)}
+  in
+    [a,b,c,d]
+
+
+line context pos = do
+  lineTo context pos.x pos.y
+  return unit
    
