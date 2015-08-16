@@ -29,8 +29,37 @@ main = do
   setCanvasWidth width element
   setCanvasHeight height element  
   context <- getContext2D element
-  drawBranch context {x:100.0, y:100.0}
+  tree context {x : 400.0, y : 400.0}
   return unit
+
+numChildren = 3
+maxLevels = 3
+
+tree context pos = do
+  nextPos <- randomNextPos pos
+  branch 0 context pos nextPos
+
+branch level context parentPos pos = 
+  if maxLevels == level
+  then
+    do
+        return unit
+  else
+    do
+        line context pos parentPos
+        ellipse context parentPos {x:1.0, y:1.0}
+        forE 1.0 3.0 $ (\i ->
+             do
+                nextPos <- randomNextPos pos
+                branch (level + 1) context pos nextPos
+        )
+        return unit
+
+
+randomNextPos pos = do
+  x <- map ((-) 50.0 <<< (*) 100.0) random
+  y <- map ((+) 50.0 <<< (*) 50.0) random
+  return (addPos pos {x : x, y : y})
 
 
 line context from to = do
@@ -52,9 +81,4 @@ ellipse context pos size = do
 
 addPos :: Position -> Position -> Position
 addPos pos1 pos2 =
-  { x : (pos1.x + pos2.x), y : (pos1.x + pos2.x) }
-
-drawBranch context pos = do
-  line context pos (addPos pos {x:150.0, y:15.0})
-  ellipse context pos {x:5.0, y:5.0}
-
+  { x : (pos1.x + pos2.x), y : (pos1.y + pos2.y) }
