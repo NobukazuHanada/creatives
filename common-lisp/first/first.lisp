@@ -1,5 +1,3 @@
-
-
 (defun main (window)
   (play window))
 
