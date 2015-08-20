@@ -4,13 +4,16 @@
 exec ros -Q -- $0 "$@"
 |#
 
-
 (ql:quickload :parenscript)
 
 (defpackage :gulp
   (:use :cl :parenscript))
 
 (in-package :gulp)
+
+
+(load "gulp-macro.lisp")
+(import-macros-from-lisp 'deftask)
 
 (defun start ()
   (with-open-file (*standard-output* "gulpfile.js" :direction :output
