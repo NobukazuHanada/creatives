@@ -1,15 +1,30 @@
+(defmacro deftask (task deps &body body)
+  (let ((firstTask (car body))
+        (restTask (cdr body)))
+    `(chain gulp
+            (task ,task (array ,@deps)
+                  (lambda ()
+                          (chain ,@firstTask
+                                 ,@(mapcar (lambda (pipedTask)
+                                            `(pipe ,pipedTask)
+                                            )
+                                           restTask)
+                                 )
+                          )))
+    ))
+
+
+
 (defvar gulp (require "gulp"))
 (defvar sass (require "gulp-sass"))
 (defvar minifycss (require "gulp-minify-css"))
 (defvar rename (require "gulp-rename"))
 
-(chain gulp (task "sass"
-                  (lambda ()
-                    (chain
-                     gulp (src "sass/**/*.scss")
-                     (pipe (sass "sass" (create :style "expanded")))
-                     (pipe ((@ gulp dest) "css"))
-                     (pipe (rename (create :suffix ".min")))
-                     (pipe (minifycss))
-                     (pipe ((@ gulp dest) "css")))
-                    )))
+
+(deftask "sass" ()
+  (gulp (src "sass/*/*.css"))
+  (sass "sass" (create :style "exanded"))
+  ((@ gulp dest) "css")
+  (minifycss)
+  (rename (create :suffix ".min"))
+  ((@ gulp dest) "css"))
