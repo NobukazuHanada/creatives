@@ -15,11 +15,17 @@ exec ros -Q -- $0 "$@"
 (load "gulp-macro.lisp")
 (import-macros-from-lisp 'deftask)
 
-(defun start ()
+(defun compile-gulpfile ()
   (with-open-file (*standard-output* "gulpfile.js" :direction :output
                                      :if-exists :supersede)
     (princ (ps-compile-file "gulp.lisp"))))
 
+(defun compile-frontend ()
+  (with-open-file (*standard-output* "bin/main.js" :direction :output
+                                     :if-exists :supersede)
+    (princ (ps-compile-file "src/main.lisp"))))
+
 (defun main (&rest argv)
   (declare (ignorable argv))
-  (start))
+  (compile-gulpfile)
+  (compile-frontend))
