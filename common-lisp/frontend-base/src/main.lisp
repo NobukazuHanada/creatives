@@ -23,15 +23,15 @@
 
 
 
+
 (defun load (event)
   (let ((dom (div ()
                   (p ()
                      (text "yes!")
-                     )
-                  (text "Hello World")
-                  )))
-    (chain document body (append-child dom))
-    ))
+                     d
+                     (text "Hello World"))))
+        )
+    (chain document body (append-child dom))))
 
 
 (setf (@ window onload) #'load)
