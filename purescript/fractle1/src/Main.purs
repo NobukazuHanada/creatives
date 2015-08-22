@@ -20,7 +20,8 @@ import Data.Int
 foreign import windowWidth :: forall eff. Eff ( dom :: DOM | eff ) Number
 foreign import windowHeight :: forall eff. Eff ( dom :: DOM | eff ) Number
 
-type Position = { x :: Number, y :: Number }
+
+
 
 main = do
   Just element <- getCanvasElementById "canvas"
@@ -29,31 +30,11 @@ main = do
   setCanvasWidth width element
   setCanvasHeight height element  
   context <- getContext2D element
-  tree context {x : 400.0, y : 400.0}
+  length <- map ((*) 200.0) random
+  rot <- map ((*) $ M.pi * 2.0) random
   return unit
 
-numChildren = 3
-maxLevels = 3
 
-tree context pos = do
-  nextPos <- randomNextPos pos
-  branch 0 context pos nextPos
-
-branch level context parentPos pos = 
-  if maxLevels == level
-  then
-    do
-        return unit
-  else
-    do
-        line context pos parentPos
-        ellipse context parentPos {x:1.0, y:1.0}
-        forE 1.0 3.0 $ (\i ->
-             do
-                nextPos <- randomNextPos pos
-                branch (level + 1) context pos nextPos
-        )
-        return unit
 
 
 randomNextPos pos = do
