@@ -7,4 +7,7 @@
          (osc-node (chain audio-context (create-oscillator))))
     (setf (@ osc-node type) "square")
     (setf (@ osc-node frequency value) 2000)
+    (chain osc-node (start 0))
     (chain osc-node (connect (@ audio-context destination)))))
+
+(main window)

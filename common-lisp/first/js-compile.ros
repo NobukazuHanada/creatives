@@ -6,10 +6,15 @@ exec ros -Q -- $0 "$@"
 
 (ql:quickload :parenscript)
 
+(defpackage :js-compile
+  (:use :cl :parenscript))
+
+(in-package :js-compile)
+
 (defun start ()
   (with-open-file (*standard-output* "main.js" :direction :output
                                      :if-exists :supersede)
-    (princ (parenscript:ps-compile-file "first.lisp"))))
+    (princ (ps-compile-file "first.lisp"))))
 
 (defun main (&rest argv)
   (declare (ignorable argv))
