@@ -41,6 +41,13 @@ exports.connect = function(_audioNode1){
     }
 }
 
+exports.setFrequency = function(f){
+    return function(osc){
+        return function(){
+            osc.frequency.value = f;
+        }      
+    }
+}
 
 exports.start = function(osc){
     return function(){

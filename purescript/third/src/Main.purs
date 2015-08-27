@@ -39,6 +39,7 @@ foreign import connect :: forall fromNode toNode eff. (AudioNode fromNode, Audio
         -> toNode
         -> Eff ( audio :: Audio | eff ) Unit 
 foreign import start :: forall eff. Osillator -> Eff ( audio :: Audio | eff ) Osillator
+foreign import setFrequency :: forall eff. Number -> Osillator -> Eff ( audio :: Audio | eff ) Unit
 
 
 
@@ -49,14 +50,11 @@ main = do
   setCanvasWidth width element
   setCanvasHeight height element  
   context <- getContext2D element
-
   audioContext <- createAudioContext
   osillator <- createOscillator audioContext
+  setFrequency 200.0 osillator
+  
   destination <- createDestination audioContext
   connect osillator destination
   start osillator
 
-  runGraphics context $ do
-    setFillStyle "#00FFFF"
-    rect { x: 0.0, y: 0.0, w: 400.0, h: 600.0 }
-    fill
