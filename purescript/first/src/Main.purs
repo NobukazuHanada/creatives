@@ -9,6 +9,8 @@ import Graphics.Canvas
 import Data.Maybe
 import qualified Math as M
 
+
+main :: forall err. Eff ( graphical : Graphics ) Unit
 main = do
   Just element <- getCanvasElementById "canvas"
   setCanvasWidth 600.0 element
